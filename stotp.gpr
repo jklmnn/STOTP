@@ -1,0 +1,11 @@
+project STOTP is
+
+   for Source_Dirs use ("libsparkcrypto/src/ada/generic",
+                        "libsparkcrypto/src/ada/nullio",
+                        "libsparkcrypto/src/shared/little_endian",
+                        "libsparkcrypto/src/shared/generic",
+                        "src");
+   for Object_Dir use "build";
+   for Main use ("sha1_hmac.adb", "base32_encode.adb", "base32_decode.adb");
+
+end STOTP;
