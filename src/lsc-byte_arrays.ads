@@ -21,9 +21,9 @@ is
        Pre => B'Length mod 4 = 0,
        Post => To_Word32_Array'Result'Length = B'Length / 4;
 
-private
-
+   subtype HMAC is Byte_Array_Type (1 .. 20);
    subtype Byte_Array32_Type is Byte_Array_Type (1 .. 4);
+   subtype Byte_Array64_Type is Byte_Array_Type (1 .. 8);
 
    function Convert_Byte_Array
      (B : LSC.Types.Byte_Array32_Type)
@@ -42,6 +42,26 @@ private
                                     1 => B (2),
                                     2 => B (3),
                                     3 => B (4)))
+     with
+       Inline;
+
+   function Convert_Byte_Array
+     (B : LSC.Types.Byte_Array64_Type)
+      return Byte_Array64_Type is
+     (Byte_Array64_Type' (1 => B (0), 2 => B (1),
+                          3 => B (2), 4 => B (3),
+                          5 => B (4), 6 => B (5),
+                          7 => B (6), 8 => B (7)))
+     with
+       Inline;
+
+   function Convert_Byte_Array
+     (B : Byte_Array64_Type)
+      return LSC.Types.Byte_Array64_Type is
+     (LSC.Types.Byte_Array64_Type' (0 => B (1), 1 => B (2),
+                                    2 => B (3), 3 => B (4),
+                                    4 => B (5), 5 => B (6),
+                                    6 => B (7), 7 => B (8)))
      with
        Inline;
 
