@@ -6,6 +6,6 @@ project STOTP is
                         "libsparkcrypto/src/shared/generic",
                         "src", "tests");
    for Object_Dir use "build";
-   for Main use ("sha1_hmac.adb", "base32_encode.adb", "base32_decode.adb");
+   for Main use ("test_sha1_hmac.adb", "test_base32.adb");
 
 end STOTP;

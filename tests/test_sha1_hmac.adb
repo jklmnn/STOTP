@@ -8,7 +8,7 @@ with LSC.HMAC_SHA1;
 use all type LSC.Types.Index;
 use all type LSC.Byte_Arrays.Byte_Array_Type;
 
-procedure Sha1_Hmac
+procedure Test_Sha1_Hmac
   with SPARK_Mode
 is
    subtype Message1_Index is LSC.Types.Word64 range 1 .. 1;
@@ -53,4 +53,4 @@ begin
                          LSC.Byte_Arrays.To_Byte_Array (
                            LSC.HMAC_SHA1.Authenticate (Key, Message1, 64)) =
                            Hash));
-end;
+end Test_Sha1_Hmac;
