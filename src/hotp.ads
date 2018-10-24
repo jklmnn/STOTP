@@ -26,6 +26,7 @@ is
       D : Positive := 6)
       return HOTP_Value
      with
+       Pre => D >= 6,
        Post => Image'Result'Length = D;
 
    function Extract

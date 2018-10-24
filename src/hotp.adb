@@ -3,6 +3,7 @@ with LSC.SHA1;
 with LSC.HMAC_SHA1;
 with LSC.Byteorder32;
 use all type Interfaces.Unsigned_8;
+use all type Interfaces.Unsigned_32;
 
 package body HOTP
 with SPARK_Mode
@@ -65,14 +66,15 @@ is
       return HOTP_Token
    is
       Offset : LSC.Types.Index := LSC.Types.Index (Mac (Mac'Last) and 16#f#) + 1;
-      W32    : LSC.Types.Word32 :=
-                 LSC.Types.Byte_Array32_To_Word32 (LSC.Types.Byte_Array32_Type '(
-                                                     0 => Mac (Offset) and 16#7f#,
-                                                     1 => Mac (Offset + 1),
-                                                     2 => Mac (Offset + 2),
-                                                     3 => Mac (Offset + 3)));
+      W32    : LSC.Types.Word32;
+
    begin
-      return HOTP_Token (LSC.Byteorder32.BE_To_Native(W32));
+      W32 := LSC.Types.Byte_Array32_To_Word32 (LSC.Types.Byte_Array32_Type '(
+                                               0 => Mac (Offset),
+                                               1 => Mac (Offset + 1),
+                                               2 => Mac (Offset + 2),
+                                               3 => Mac (Offset + 3)));
+      return HOTP_Token (LSC.Byteorder32.BE_To_Native(W32) and 16#7fffffff#);
    end Extract;
 
 end HOTP;
