@@ -2,6 +2,7 @@ with Interfaces;
 with LSC.SHA1;
 with LSC.HMAC_SHA1;
 with LSC.Byteorder32;
+with LSC.Byteorder64;
 use all type Interfaces.Unsigned_8;
 use all type Interfaces.Unsigned_32;
 
@@ -18,20 +19,12 @@ is
       Counter : LSC.Types.Word64)
       return HOTP_Token
    is
-      K : LSC.Types.Word32_Array_Type :=
-            LSC.Byte_Arrays.To_Word32_Array (Key);
-      C : LSC.Types.Word32_Array_Type :=
-            LSC.Byte_Arrays.To_Word32_Array (LSC.Byte_Arrays.Convert_Byte_Array (
-                                             LSC.Types.Word64_To_Byte_Array64 (Counter)));
-      K_Block : LSC.SHA1.Block_Type := (others => 0);
-      C_Block : LSC.SHA1.Block_Type := (others => 0);
-      C_Message : LSC.SHA1.Message_Type (1 .. 1) := (1 => (others => 0));
-      Mac     : LSC.Byte_Arrays.HMAC;
+      C : LSC.Byte_Arrays.Byte_Array_Type :=
+            LSC.Byte_Arrays.Convert_Byte_Array (LSC.Types.Word64_To_Byte_Array64 (
+                                                LSC.Byteorder64.Native_To_BE(Counter)));
+      Mac     : HMAC.HMAC_Type;
    begin
-      K_Block (K_Block'First .. K_Block'First + K'Length - 1) := K;
-      C_Block (C_Block'First .. C_Block'First + C'Length - 1) := C;
-      C_Message (1) := C_Block;
-      Mac := LSC.Byte_Arrays.To_Byte_Array (LSC.HMAC_SHA1.Authenticate (K_Block, C_Message, 64));
+      Mac := HMAC.SHA1 (Key, C);
       return Extract(Mac);
    end HOTP;
 
@@ -62,7 +55,7 @@ is
    -------------
 
    function Extract
-     (Mac : LSC.Byte_Arrays.HMAC)
+     (Mac : HMAC.HMAC_Type)
       return HOTP_Token
    is
       Offset : LSC.Types.Index := LSC.Types.Index (Mac (Mac'Last) and 16#f#) + 1;

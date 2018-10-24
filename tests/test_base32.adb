@@ -6,7 +6,7 @@ procedure Test_Base32
 is
    Test_Plain         : constant String := "test1";
    Test_Encoded       : constant Base32.Base32_String := "ORSXG5BR";
-   Test_Encoded_Lower : Constant Base32.Base32_String := "orsxg5br";
+   Test_Encoded_Lower : constant Base32.Base32_String := "orsxg5br";
 begin
    pragma Warnings (Off, "no Global contract");
    Ada.Text_IO.Put_Line (Boolean'Image (

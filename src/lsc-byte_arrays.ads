@@ -21,7 +21,6 @@ is
        Pre => B'Length mod 4 = 0,
        Post => To_Word32_Array'Result'Length = B'Length / 4;
 
-   subtype HMAC is Byte_Array_Type (1 .. 20);
    subtype Byte_Array32_Type is Byte_Array_Type (1 .. 4);
    subtype Byte_Array64_Type is Byte_Array_Type (1 .. 8);
 

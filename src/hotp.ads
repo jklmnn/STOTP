@@ -1,5 +1,6 @@
 with LSC.Types;
 with LSC.Byte_Arrays;
+with HMAC;
 use all type LSC.Types.Index;
 
 package HOTP
@@ -30,7 +31,7 @@ is
        Post => Image'Result'Length = D;
 
    function Extract
-     (Mac : LSC.Byte_Arrays.HMAC)
+     (Mac : HMAC.HMAC_Type)
       return HOTP_Token;
 
 end HOTP;
