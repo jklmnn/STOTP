@@ -28,8 +28,6 @@ is
      with
        Post => Image'Result'Length = D;
 
-private
-
    function Extract
      (Mac : LSC.Byte_Arrays.HMAC)
       return HOTP_Token;

@@ -1,7 +1,8 @@
 with Interfaces;
 with LSC.SHA1;
 with LSC.HMAC_SHA1;
-use all type Interfaces.Unsigned_64;
+with LSC.Byteorder32;
+use all type Interfaces.Unsigned_8;
 
 package body HOTP
 with SPARK_Mode
@@ -63,28 +64,15 @@ is
      (Mac : LSC.Byte_Arrays.HMAC)
       return HOTP_Token
    is
-      use Interfaces;
-      Token       : Unsigned_32 := 0;
-      type Bit is range 0 .. 1;
-      type Bit_Index is range 0 .. 159;
-      type Bit_Array is array (Bit_Index) of Bit;
-      Mac_Bits    : Bit_Array := (others => 0);
-      Loop_Offset : Bit_Index;
-      Offset      : Bit_Index;
+      Offset : LSC.Types.Index := LSC.Types.Index (Mac (Mac'Last) and 16#f#) + 1;
+      W32    : LSC.Types.Word32 :=
+                 LSC.Types.Byte_Array32_To_Word32 (LSC.Types.Byte_Array32_Type '(
+                                                     0 => Mac (Offset) and 16#7f#,
+                                                     1 => Mac (Offset + 1),
+                                                     2 => Mac (Offset + 2),
+                                                     3 => Mac (Offset + 3)));
    begin
-      Offset := Bit_Index (Unsigned_64 (Mac'Last) and 16#ff#);
-      for I in Mac'Range loop
-         Loop_Offset := Mac_Bits'First + Bit_Index (I - Mac'First) * 8;
-         for J in 0 .. 7 loop
-            Mac_Bits (Loop_Offset + Bit_Index (J)) :=
-              Bit (Shift_Right (Mac (I), 7 - J) and 1);
-         end loop;
-      end loop;
-      for I in Offset + 1 .. Offset + 31 loop
-         Token := Token + Unsigned_32 (Mac_Bits (I));
-         Token := Shift_Left (Token, 1);
-      end loop;
-      return HOTP_Token (Token);
+      return HOTP_Token (LSC.Byteorder32.BE_To_Native(W32));
    end Extract;
 
 end HOTP;
