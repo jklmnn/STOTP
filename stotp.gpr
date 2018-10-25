@@ -4,11 +4,12 @@ project STOTP is
                         "libsparkcrypto/src/ada/nullio",
                         "libsparkcrypto/src/shared/little_endian",
                         "libsparkcrypto/src/shared/generic",
-                        "src", "tests");
+                        "src", "tests", "examples");
    for Object_Dir use "build";
    for Main use ("test_sha1_hmac.adb",
                  "test_base32.adb",
                  "test_hotp.adb",
-                 "test_totp.adb");
+                 "test_totp.adb",
+                 "generate_2fa_token.adb");
 
 end STOTP;
