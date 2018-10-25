@@ -28,19 +28,24 @@ is
 
    function Decode (S : Base32_String) return Buffer
      with
-       Pre => S'Length < Integer (LSC.Types.Index'Last / 5);
+       Pre =>
+         S'Length < Integer (Natural'Last / 5) and
+         S'Length >= 8,
+       Post =>
+         Decode'Result'Length = S'Length * 5 / 8;
 
    function Encode (B : Buffer) return Base32_String
      with
-       Pre => B'Length < LSC.Types.Index'Last / 8;
+       Pre => B'Length < Natural'Last / 8;
 
    function Decode_String (S : Base32_String) return String
      with
-       Pre => S'Length < Integer (LSC.Types.Index'Last / 5);
+       Pre =>
+         S'Length < Natural'Last / 5 and S'Length >= 8;
 
    function Encode_String (S : String) return Base32_String
      with
-       Pre => S'Length mod 5 = 0 and S'Length < Integer (LSC.Types.Index'Last / 8);
+       Pre => S'Length mod 5 = 0 and S'Length < Natural'Last / 8;
 
 private
 
@@ -75,8 +80,9 @@ private
           Shift_Right (Decode_Map (C4), 4))
      with
        Pre =>
-         Valid_Base32_Character (C2) and Valid_Base32_Character (C3)
-     and Valid_Base32_Character (C4);
+         Valid_Base32_Character (C2) and
+         Valid_Base32_Character (C3) and
+         Valid_Base32_Character (C4);
 
    function Decode_3 (C4 : Character;
                       C5 : Character) return Byte is
@@ -94,8 +100,9 @@ private
           Shift_Right (Decode_Map (C7), 3))
      with
        Pre =>
-         Valid_Base32_Character (C5) and Valid_Base32_Character (C6) and
-     Valid_Base32_Character (C7);
+         Valid_Base32_Character (C5) and
+         Valid_Base32_Character (C6) and
+         Valid_Base32_Character (C7);
 
    function Decode_5 (C7 : Character;
                       C8 : Character) return Byte is

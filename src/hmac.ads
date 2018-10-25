@@ -1,4 +1,5 @@
 with LSC.Byte_Arrays;
+use all type LSC.Byte_Arrays.Byte_Array_Type;
 
 package HMAC
 with SPARK_Mode
@@ -12,8 +13,6 @@ is
       return HMAC_Type
      with
        Pre =>  Key'Length <= 64
-       and Msg'Length <= 64
-       and Key'Length mod 4 = 0
-       and Msg'Length mod 4 = 0;
+       and Msg'Length <= 64;
 
 end HMAC;

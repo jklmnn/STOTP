@@ -12,6 +12,6 @@ is
       Time : LSC.Types.Word64)
       return OTP_Token
      with
-       Pre => Key'Length mod 4 = 0 and Key'Length <= 64;
+       Pre => Key'Length <= 64;
 
 end OTP.T;

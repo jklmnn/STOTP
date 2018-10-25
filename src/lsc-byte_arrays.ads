@@ -5,21 +5,26 @@ package LSC.Byte_Arrays
 with SPARK_Mode
 is
 
-   type Byte_Array_Type is array (LSC.Types.Index range <>) of LSC.Types.Byte;
+   subtype Natural_Index is Natural range Natural'First .. Natural'Last - 1;
+   type Byte_Array_Type is array (Natural_Index range <>) of LSC.Types.Byte;
 
    function To_Byte_Array
      (W32 : LSC.Types.Word32_Array_Type)
       return Byte_Array_Type
      with
-       Pre => W32'Length < LSC.Types.Index'Last / 4,
+       Pre => W32'Length <= LSC.Types.Index'Last,
        Post => To_Byte_Array'Result'Length = 4 * W32'Length;
 
    function To_Word32_Array
      (B : Byte_Array_Type)
       return LSC.Types.Word32_Array_Type
      with
-       Pre => B'Length mod 4 = 0,
-       Post => To_Word32_Array'Result'Length = B'Length / 4;
+       Pre =>
+         B'Length mod 4 = 0
+         and then B'Length < Natural'Last / 4
+         and then B'Length / 4 < Natural (LSC.Types.Index'Last),
+       Post =>
+         To_Word32_Array'Result'Length = B'Length / 4;
 
    subtype Byte_Array32_Type is Byte_Array_Type (1 .. 4);
    subtype Byte_Array64_Type is Byte_Array_Type (1 .. 8);

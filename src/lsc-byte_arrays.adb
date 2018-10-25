@@ -14,10 +14,10 @@ is
       return Byte_Array_Type
    is
       B : Byte_Array_Type (1 .. W32'Length * 4) := (others => 0);
-      Offset : LSC.Types.Index;
+      Offset : Natural_Index;
    begin
       for I in W32'Range loop
-         Offset := B'First + (I - W32'First) * 4;
+         Offset := B'First + Natural_Index (I - W32'First) * 4;
          B (Offset .. Offset + 3) :=
            Convert_Byte_Array (LSC.Types.Word32_To_Byte_Array32 (W32 (I)));
       end loop;
@@ -32,12 +32,11 @@ is
      (B : Byte_Array_Type)
       return LSC.Types.Word32_Array_Type
    is
-      W : LSC.Types.Word32_Array_Type (1 .. B'Length / 4) := (others => 0);
-      Offset : LSC.Types.Index;
+      W : LSC.Types.Word32_Array_Type (1 .. LSC.Types.Index (B'Length / 4)) := (others => 0);
+      Offset : Natural_Index;
    begin
-      pragma Assert (W'Length * 4 = B'Length);
       for I in W'Range loop
-         Offset := B'First + (I - W'First) * 4;
+         Offset := B'First + Natural_Index (I - W'First) * 4;
          W (I) :=
            LSC.Types.Byte_Array32_To_Word32 (Convert_Byte_Array (
                                              Byte_Array32_Type (

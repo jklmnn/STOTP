@@ -36,7 +36,7 @@ is
      (Mac : HMAC.HMAC_Type)
       return OTP_Token
    is
-      Offset : LSC.Types.Index := LSC.Types.Index (Mac (Mac'Last) and 16#f#) + 1;
+      Offset : Natural := Natural (Mac (Mac'Last) and 16#f#) + 1;
       W32    : LSC.Types.Word32;
 
    begin
