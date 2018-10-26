@@ -1,10 +1,17 @@
 with LSC.Byte_Arrays;
 use all type LSC.Byte_Arrays.Byte_Array_Type;
 
+-- @summary
+-- HMAC wrapper
+--
+-- @description
+-- Wrapper around libsparkcryptos HMAC_SHA1.Authenticate that uses byte arrays
+-- instead of 32bit word arrays
 package HMAC
 with SPARK_Mode
 is
 
+   -- Byte array of length 20
    subtype HMAC_Type is LSC.Byte_Arrays.Byte_Array_Type (1 .. 20);
 
    function SHA1

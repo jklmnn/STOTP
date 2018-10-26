@@ -3,10 +3,15 @@ with LSC.Types;
 with LSC.Byte_Arrays;
 use all type LSC.Types.Index;
 
+-- @summary
+-- Base32 encoder and decoder
 package Base32
   with SPARK_Mode
 is
 
+   -- Check if a character is in the Base32 alphabet
+   -- @param C Character to Check
+   -- @return True if C is in [a-zA-Z2-7]
    function Valid_Base32_Character
      (C : Character) return Boolean
    is
@@ -14,11 +19,14 @@ is
         (Character'Pos (C) > 64 and Character'Pos (C) < 91) or
           (Character'Pos (C) > 49 and Character'Pos (C) < 56));
 
+   -- 8bit unsigned byte
    subtype Byte is LSC.Types.Byte;
+   -- Array of bytes
    subtype Buffer is LSC.Byte_Arrays.Byte_Array_Type
      with
        Dynamic_Predicate => Buffer'Length mod 5 = 0;
 
+   -- Base32 string that can only contain [a-zA-Z2-7]
    subtype Base32_String is String
      with
        Dynamic_Predicate =>
@@ -26,6 +34,9 @@ is
          (for all C in Base32_String'Range =>
             Valid_Base32_Character (Base32_String (C)));
 
+   -- Decode Base32 string into a byte array
+   -- @param S Valid Base32 string
+   -- @return Decoded byte array
    function Decode (S : Base32_String) return Buffer
      with
        Pre =>
@@ -34,15 +45,25 @@ is
        Post =>
          Decode'Result'Length = S'Length * 5 / 8;
 
+
+   -- Encodes a byte array into a Base32 string
+   -- @param B byte array
+   -- @return Base32 string
    function Encode (B : Buffer) return Base32_String
      with
        Pre => B'Length < Natural'Last / 8;
 
+   -- Decodes Base32 into ASCII
+   -- @param S Base32 string
+   -- @return String
    function Decode_String (S : Base32_String) return String
      with
        Pre =>
          S'Length < Natural'Last / 5 and S'Length >= 8;
 
+   -- Encodes an ASCII string into Base32
+   -- @param ASCII String
+   -- @return Base32 string
    function Encode_String (S : String) return Base32_String
      with
        Pre => S'Length mod 5 = 0 and S'Length < Natural'Last / 8;
