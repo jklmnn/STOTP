@@ -19,9 +19,8 @@ To build the project the [GNAT GPL toolchain](https://www.adacore.com/download/)
 
 ### Build
  
- - `$ git clone https://github.com/jklmnn/STOTP.git`
+ - `$ git clone --recursive https://github.com/jklmnn/STOTP.git`
  - `$ cd STOTP`
- - `$ git submodule update --init --recursive`
  - `$ gprbuild -P stotp.gpr`
 
 ### Prove
