@@ -11,6 +11,7 @@ package LSC.Byte_Arrays.Pad is
      (B : LSC.Byte_Arrays.Byte_Array_Type)
       return LSC.Byte_Arrays.Byte_Array_Type
      with
+       Depends => (Pad'Result => (B, Padding)),
        Pre =>
          B'Length < LSC.Byte_Arrays.Natural_Index'Last - Padding,
        Post =>

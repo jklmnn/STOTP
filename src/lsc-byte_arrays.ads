@@ -20,6 +20,7 @@ is
      (W32 : LSC.Types.Word32_Array_Type)
       return Byte_Array_Type
      with
+       Depends => (To_Byte_Array'Result => W32),
        Pre => W32'Length <= LSC.Types.Index'Last,
        Post => To_Byte_Array'Result'Length = 4 * W32'Length;
 
@@ -30,6 +31,7 @@ is
      (B : Byte_Array_Type)
       return LSC.Types.Word32_Array_Type
      with
+       Depends => (To_Word32_Array'Result => B),
        Pre =>
          B'Length mod 4 = 0
          and then B'Length < Natural'Last / 4
@@ -51,6 +53,7 @@ is
                           3 => B (2),
                           4 => B (3)))
      with
+       Depends => (Convert_Byte_Array'Result => B),
        Inline;
 
    -- Converts a 4 byte long byte array into an LSC 32bit byte array
@@ -64,6 +67,7 @@ is
                                     2 => B (3),
                                     3 => B (4)))
      with
+       Depends => (Convert_Byte_Array'Result => B),
        Inline;
 
    -- Converts LSC 64bit byte array into a 8 byte long byte array
@@ -77,6 +81,7 @@ is
                           5 => B (4), 6 => B (5),
                           7 => B (6), 8 => B (7)))
      with
+       Depends => (Convert_Byte_Array'Result => B),
        Inline;
 
    -- Converts a 8 byte long byte array into an LSC 64bit byte array
@@ -90,6 +95,7 @@ is
                                     4 => B (5), 5 => B (6),
                                     6 => B (7), 7 => B (8)))
      with
+       Depends => (Convert_Byte_Array'Result => B),
        Inline;
 
 end LSC.Byte_Arrays;

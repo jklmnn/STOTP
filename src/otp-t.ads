@@ -24,6 +24,7 @@ is
       Time : LSC.Types.Word64)
       return OTP_Token
      with
+       Depends => (TOTP'Result => (Key, Time)),
        Pre => Key'Length <= 64;
 
 end OTP.T;

@@ -24,6 +24,7 @@ is
       D : Positive := 6)
       return OTP_Value
      with
+       Depends => (Image'Result => (H, D)),
        Pre => D >= 6,
        Post => Image'Result'Length = D;
 

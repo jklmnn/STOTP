@@ -17,7 +17,9 @@ is
    is
      ((Character'Pos (C) > 96 and Character'Pos (C) < 123) or
         (Character'Pos (C) > 64 and Character'Pos (C) < 91) or
-          (Character'Pos (C) > 49 and Character'Pos (C) < 56));
+          (Character'Pos (C) > 49 and Character'Pos (C) < 56))
+         with
+           Depends => (Valid_Base32_Character'Result => C);
 
    -- 8bit unsigned byte
    subtype Byte is LSC.Types.Byte;
@@ -39,6 +41,7 @@ is
    -- @return Decoded byte array
    function Decode (S : Base32_String) return Buffer
      with
+       Depends => (Decode'Result => S),
        Pre =>
          S'Length < Integer (Natural'Last / 5) and
          S'Length >= 8,
@@ -51,6 +54,7 @@ is
    -- @return Base32 string
    function Encode (B : Buffer) return Base32_String
      with
+       Depends => (Encode'Result => B),
        Pre => B'Length < Natural'Last / 8;
 
    -- Decodes Base32 into ASCII
@@ -58,6 +62,7 @@ is
    -- @return String
    function Decode_String (S : Base32_String) return String
      with
+       Depends => (Decode_String'Result => S),
        Pre =>
          S'Length < Natural'Last / 5 and S'Length >= 8;
 
@@ -66,6 +71,7 @@ is
    -- @return Base32 string
    function Encode_String (S : String) return Base32_String
      with
+       Depends => (Encode_String'Result => S),
        Pre => S'Length mod 5 = 0 and S'Length < Natural'Last / 8;
 
 private
@@ -74,11 +80,13 @@ private
 
    function Decode_Map (C : Character) return Byte
      with
+       Depends => (Decode_Map'Result => C),
        Pre => Valid_Base32_Character (C),
        Post => Decode_Map'Result < 32;
 
    function Encode_Map (N : Byte) return Character
      with
+       Depends => (Encode_Map'Result => N),
        Pre => N < 32,
        Post => Valid_Base32_Character (Encode_Map'Result);
 
@@ -90,6 +98,7 @@ private
      (Shift_Left (Decode_Map (C1), 3) or
         Shift_Right (Decode_Map (C2), 2))
        with
+         Depends => (Decode_1'Result => (C1, C2)),
          Pre =>
            Valid_Base32_Character (C1) and Valid_Base32_Character (C2);
 
@@ -100,6 +109,7 @@ private
           Shift_Left (Byte (Decode_Map (C3)), 1) or
           Shift_Right (Decode_Map (C4), 4))
      with
+       Depends => (Decode_2'Result => (C2, C3, C4)),
        Pre =>
          Valid_Base32_Character (C2) and
          Valid_Base32_Character (C3) and
@@ -110,6 +120,7 @@ private
      (Shift_Left (Byte (Decode_Map (C4)), 4) or
           Shift_Right (Decode_Map (C5), 1))
      with
+       Depends => (Decode_3'Result => (C4, C5)),
        Pre =>
          Valid_Base32_Character (C4) and Valid_Base32_Character (C5);
 
@@ -120,6 +131,7 @@ private
         Shift_Left (Decode_Map (C6), 2) or
           Shift_Right (Decode_Map (C7), 3))
      with
+       Depends => (Decode_4'Result => (C5, C6, C7)),
        Pre =>
          Valid_Base32_Character (C5) and
          Valid_Base32_Character (C6) and
@@ -130,12 +142,14 @@ private
      (Shift_Left (Decode_Map (C7), 5) or
         Decode_Map (C8))
        with
+         Depends => (Decode_5'Result => (C7, C8)),
          Pre =>
            Valid_Base32_Character (C7) and Valid_Base32_Character (C8);
 
    function Encode_1 (B1 : Byte) return Character is
      (Encode_Map (Shift_Right (B1, 3)))
      with
+       Depends => (Encode_1'Result => B1),
        Post =>
          Valid_Base32_Character (Encode_1'Result);
 
@@ -144,12 +158,14 @@ private
      (Encode_Map (Shift_Left (B1 and 7, 2) or
                     Shift_Right (B2, 6)))
      with
+       Depends => (Encode_2'Result => (B1, B2)),
        Post =>
          Valid_Base32_Character (Encode_2'Result);
 
    function Encode_3 (B2 : Byte) return Character is
      (Encode_Map (Shift_Right (B2 and 63, 1)))
      with
+       Depends => (Encode_3'Result => B2),
        Post =>
          Valid_Base32_Character (Encode_3'Result);
 
@@ -158,6 +174,7 @@ private
      (Encode_Map (Shift_Left (B2 and 1, 4) or
                     Shift_Right (B3, 4)))
      with
+       Depends => (Encode_4'Result => (B2, B3)),
        Post =>
          Valid_Base32_Character (Encode_4'Result);
 
@@ -166,12 +183,14 @@ private
      (Encode_Map (Shift_Left (B3 and 15, 1) or
                     Shift_Right (B4, 7)))
      with
+       Depends => (Encode_5'Result => (B3, B4)),
        Post =>
          Valid_Base32_Character (Encode_5'Result);
 
    function Encode_6 (B4 : Byte) return Character is
      (Encode_Map (Shift_Right (B4 and 127, 2)))
      with
+       Depends => (Encode_6'Result => B4),
        Post =>
          Valid_Base32_Character (Encode_6'Result);
 
@@ -180,12 +199,14 @@ private
      (Encode_Map (Shift_Left (B4 and 3, 3) or
                     Shift_Right (B5, 5)))
      with
+       Depends => (Encode_7'Result => (B4, B5)),
        Post =>
          Valid_Base32_Character (Encode_7'Result);
 
    function Encode_8 (B5 : Byte) return Character is
      (Encode_Map (B5 and 31))
        with
+         Depends => (Encode_8'Result => B5),
          Post =>
            Valid_Base32_Character (Encode_8'Result);
 

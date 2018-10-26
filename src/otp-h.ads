@@ -21,11 +21,14 @@ is
       Counter : LSC.Types.Word64)
       return OTP_Token
      with
+       Depends => (HOTP'Result => (Key, Counter)),
        Pre => Key'Length <= 64;
 
    -- @private Only used to generate the token
    function Extract
      (Mac : HMAC.HMAC_Type)
-      return OTP_Token;
+      return OTP_Token
+     with
+       Depends => (Extract'Result => Mac);
 
 end OTP.H;

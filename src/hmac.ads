@@ -19,6 +19,7 @@ is
       Msg : LSC.Byte_Arrays.Byte_Array_Type)
       return HMAC_Type
      with
+       Depends => (SHA1'Result => (Key, Msg)),
        Pre =>  Key'Length <= 64
        and Msg'Length <= 64;
 
