@@ -32,8 +32,8 @@ is
      with
        Dynamic_Predicate =>
          Base32_String'Length mod 8 = 0 and
-         (for all C in Base32_String'Range =>
-            Valid_Base32_Character (Base32_String (C)));
+         (for all C of Base32_String =>
+            Valid_Base32_Character (C));
 
    -- Decode Base32 string into a byte array
    -- @param S Valid Base32 string
