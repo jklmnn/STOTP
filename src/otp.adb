@@ -1,4 +1,3 @@
-
 package body OTP
 with SPARK_Mode
 is

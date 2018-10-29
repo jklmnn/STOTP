@@ -20,7 +20,7 @@ is
       C : LSC.Byte_Arrays.Byte_Array_Type :=
             LSC.Byte_Arrays.Convert_Byte_Array (LSC.Types.Word64_To_Byte_Array64 (
                                                 LSC.Byteorder64.Native_To_BE(Counter)));
-      Mac     : HMAC.HMAC_Type;
+      Mac : HMAC.HMAC_Type;
    begin
       Mac := HMAC.SHA1 (Key, C);
       return Extract(Mac);
