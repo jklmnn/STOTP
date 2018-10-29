@@ -4,8 +4,6 @@ with LSC.Byte_Arrays;
 with HMAC;
 with OTP;
 with OTP.H;
-use all type OTP.OTP_Token;
-use all type OTP.OTP_Value;
 
 procedure Test_HOTP
   with SPARK_Mode

@@ -6,7 +6,6 @@ with LSC.Byte_Arrays;
 with OTP;
 with OTP.T;
 with Base32;
-use all type LSC.Types.Index;
 
 procedure Generate_2fa_Token
   with SPARK_Mode

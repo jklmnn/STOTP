@@ -1,6 +1,3 @@
-with LSC.Types;
-use all type LSC.Types.Index;
-
 package body LSC.Byte_Arrays
 with SPARK_Mode
 is

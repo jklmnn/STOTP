@@ -1,5 +1,4 @@
 with LSC.Byte_Arrays;
-use all type LSC.Byte_Arrays.Byte_Array_Type;
 
 -- @summary
 -- HMAC wrapper

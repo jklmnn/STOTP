@@ -1,6 +1,4 @@
 with Interfaces;
-with LSC.SHA1;
-with LSC.HMAC_SHA1;
 with LSC.Byteorder32;
 with LSC.Byteorder64;
 use all type Interfaces.Unsigned_8;

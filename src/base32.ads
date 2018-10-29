@@ -1,7 +1,6 @@
 with Interfaces;
 with LSC.Types;
 with LSC.Byte_Arrays;
-use all type LSC.Types.Index;
 
 -- @summary
 -- Base32 encoder and decoder

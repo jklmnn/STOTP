@@ -1,12 +1,7 @@
 with Ada.Text_IO;
 
-with LSC.Byteorder32;
-with LSC.Types;
 with LSC.Byte_Arrays;
-with LSC.SHA1;
-with LSC.HMAC_SHA1;
 with HMAC;
-use all type LSC.Types.Index;
 use all type LSC.Byte_Arrays.Byte_Array_Type;
 
 procedure Test_Sha1_Hmac
