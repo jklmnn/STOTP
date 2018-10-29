@@ -104,8 +104,8 @@ private
    function Decode_2 (C2 : Character;
                       C3 : Character;
                       C4 : Character) return Byte is
-     (Shift_Left (Byte (Decode_Map (C2)), 6) or
-          Shift_Left (Byte (Decode_Map (C3)), 1) or
+     (Shift_Left (Decode_Map (C2), 6) or
+          Shift_Left (Decode_Map (C3), 1) or
           Shift_Right (Decode_Map (C4), 4))
      with
        Depends => (Decode_2'Result => (C2, C3, C4)),
@@ -116,7 +116,7 @@ private
 
    function Decode_3 (C4 : Character;
                       C5 : Character) return Byte is
-     (Shift_Left (Byte (Decode_Map (C4)), 4) or
+     (Shift_Left (Decode_Map (C4), 4) or
           Shift_Right (Decode_Map (C5), 1))
      with
        Depends => (Decode_3'Result => (C4, C5)),
