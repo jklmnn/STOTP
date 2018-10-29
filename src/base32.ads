@@ -14,9 +14,7 @@ is
    function Valid_Base32_Character
      (C : Character) return Boolean
    is
-     ((Character'Pos (C) > 96 and Character'Pos (C) < 123) or
-        (Character'Pos (C) > 64 and Character'Pos (C) < 91) or
-          (Character'Pos (C) > 49 and Character'Pos (C) < 56))
+     (C in 'a' .. 'z' | 'A' .. 'Z' | '2' .. '7')
          with
            Depends => (Valid_Base32_Character'Result => C);
 
