@@ -1,0 +1,14 @@
+sudo: required
+
+language: c
+
+services:
+    - docker
+
+before_script:
+    - mkdir build
+
+script:
+    - docker run -v $PWD:/app -w /app jklmnn/gnat:gpl.2018.spark /bin/sh -c "gprbuild -P stotp.gpr"
+    - ./build/test
+    - docker run -v $PWD:/app -w /app jklmnn/gnat:gpl.2018.spark /bin/sh -c "gnatprove -P stotp.gpr --level=2 --no-counterexample --checks-as-errors"
