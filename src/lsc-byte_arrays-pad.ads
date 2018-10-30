@@ -1,8 +1,8 @@
 
--- @summary
--- Zero right padding of byte arrays
+--  @summary
+--  Zero right padding of byte arrays
 --
--- @param Padding Block size to which padding should be applied
+--  @param Padding Block size to which padding should be applied
 generic
    Padding : LSC.Byte_Arrays.Natural_Index;
 package LSC.Byte_Arrays.Pad is

@@ -23,8 +23,10 @@ is
       Result : String;
       Passed : in out Boolean)
    is
-      PName : String (1 .. Name'Length) := Name (Name'First .. Name'Last);
-      PResult : String (1 .. Result'Length) := Result (Result'First .. Result'Last);
+      PName : constant String (1 .. Name'Length) :=
+        Name (Name'First .. Name'Last);
+      PResult : constant String (1 .. Result'Length) :=
+        Result (Result'First .. Result'Last);
    begin
       pragma Warnings (Off, "no Global contract");
       Passed := Passed and Result = "PASSED";

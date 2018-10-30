@@ -14,9 +14,8 @@ is
       Time : LSC.Types.Word64)
       return OTP_Token
    is
-      Floored : LSC.Types.Word64 := (Time - T0) / X;
    begin
-      return OTP.H.HOTP (Key, Floored);
+      return OTP.H.HOTP (Key, (Time - T0) / X);
    end TOTP;
 
 end OTP.T;

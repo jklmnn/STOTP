@@ -22,7 +22,7 @@ is
       if OTP.H.Extract (Rfc_Hmac) /= Rfc_Token then
          return "HOTP extraction test failed";
       end if;
-      if OTP.H.Extract (Rfc_Hmac) /= Rfc_Token then
+      if OTP.Image (OTP.H.HOTP (Key, Counter), 6) /= Value then
          return "HOTP value calculation failed";
       end if;
       return "PASSED";

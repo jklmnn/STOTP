@@ -29,7 +29,8 @@ is
      (B : Byte_Array_Type)
       return LSC.Types.Word32_Array_Type
    is
-      W : LSC.Types.Word32_Array_Type (1 .. LSC.Types.Index (B'Length / 4)) := (others => 0);
+      W : LSC.Types.Word32_Array_Type (1 .. LSC.Types.Index (B'Length / 4)) :=
+        (others => 0);
       Offset : Natural_Index;
    begin
       for I in W'Range loop

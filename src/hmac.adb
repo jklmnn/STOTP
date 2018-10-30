@@ -25,8 +25,8 @@ is
       M    : LSC.SHA1.Message_Type (1 .. 1) := (others => MB);
       Hash : LSC.SHA1.Hash_Type;
 
-      Padded_Key : LSC.Byte_Arrays.Byte_Array_Type := Pad4.Pad (Key);
-      Padded_Msg : LSC.Byte_Arrays.Byte_Array_Type := Pad4.Pad (Msg);
+      Padded_Key : constant LSC.Byte_Arrays.Byte_Array_Type := Pad4.Pad (Key);
+      Padded_Msg : constant LSC.Byte_Arrays.Byte_Array_Type := Pad4.Pad (Msg);
    begin
       K (K'First .. K'First + (Padded_Key'Length / 4) - 1) :=
         LSC.Byte_Arrays.To_Word32_Array (Padded_Key);

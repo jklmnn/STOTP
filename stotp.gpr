@@ -9,4 +9,13 @@ project STOTP is
    for Main use ("test.adb",
                  "generate_2fa_token.adb");
 
+   package Compiler is
+      Style_Switches := ("-gnaty", "-gnatwa");
+      for Switches ("base32*") use Style_Switches;
+      for Switches ("hmac*") use Style_Switches;
+      for Switches ("lsc-byte_arrays*") use Style_Switches;
+      for Switches ("otp*") use Style_Switches;
+      for Switches ("*test*") use Style_Switches;
+   end Compiler;
+
 end STOTP;

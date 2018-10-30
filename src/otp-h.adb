@@ -17,13 +17,14 @@ is
       Counter : LSC.Types.Word64)
       return OTP_Token
    is
-      C : LSC.Byte_Arrays.Byte_Array_Type :=
-            LSC.Byte_Arrays.Convert_Byte_Array (LSC.Types.Word64_To_Byte_Array64 (
-                                                LSC.Byteorder64.Native_To_BE(Counter)));
+      C : constant LSC.Byte_Arrays.Byte_Array_Type :=
+        LSC.Byte_Arrays.Convert_Byte_Array (LSC.Types.Word64_To_Byte_Array64 (
+                                            LSC.Byteorder64.Native_To_BE (
+                                              Counter)));
       Mac : HMAC.HMAC_Type;
    begin
       Mac := HMAC.SHA1 (Key, C);
-      return Extract(Mac);
+      return Extract (Mac);
    end HOTP;
 
    -------------
@@ -34,7 +35,7 @@ is
      (Mac : HMAC.HMAC_Type)
       return OTP_Token
    is
-      Offset : Natural := Natural (Mac (Mac'Last) and 16#f#) + 1;
+      Offset : constant Natural := Natural (Mac (Mac'Last) and 16#f#) + 1;
       W32    : LSC.Types.Word32;
 
    begin
@@ -43,7 +44,7 @@ is
                                                1 => Mac (Offset + 1),
                                                2 => Mac (Offset + 2),
                                                3 => Mac (Offset + 3)));
-      return OTP_Token (LSC.Byteorder32.BE_To_Native(W32) and 16#7fffffff#);
+      return OTP_Token (LSC.Byteorder32.BE_To_Native (W32) and 16#7fffffff#);
    end Extract;
 
 end OTP.H;
