@@ -9,8 +9,7 @@ is
    subtype OTP_Value is String
      with
        Dynamic_Predicate =>
-         (for all C of OTP_Value =>
-            Character'Pos (C) > 47 and Character'Pos (C) < 58);
+         (for all C of OTP_Value => C in '0' .. '9');
 
    --  31 bit OTP token
    subtype OTP_Token is Integer range 0 .. 2 ** 31 - 1;

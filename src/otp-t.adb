@@ -1,8 +1,7 @@
-with Interfaces;
 with OTP.H;
-use all type Interfaces.Unsigned_64;
 
 package body OTP.T
+with SPARK_Mode
 is
 
    ----------
@@ -10,8 +9,10 @@ is
    ----------
 
    function TOTP
-     (Key : LSC.Byte_Arrays.Byte_Array_Type;
-      Time : LSC.Types.Word64)
+     (Key  : LSC.Byte_Arrays.Byte_Array_Type;
+      Time : LSC.Types.Word64;
+      X    : LSC.Types.Word64 := 30;
+      T0   : LSC.Types.Word64 := 0)
       return OTP_Token
    is
    begin

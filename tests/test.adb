@@ -5,7 +5,7 @@ with Base32.Test;
 with HMAC.Test;
 with OTP.Test;
 with OTP.H.Test;
-with TOTP_Test;
+with OTP.T.Test;
 
 procedure Test
 with SPARK_Mode
@@ -39,7 +39,7 @@ begin
    Eval (HMAC.Test.Name, HMAC.Test.Run, Passed);
    Eval (OTP.Test.Name, OTP.Test.Run, Passed);
    Eval (OTP.H.Test.Name, OTP.H.Test.Run, Passed);
-   Eval (TOTP_Test.Name, TOTP_Test.Run, Passed);
+   Eval (OTP.T.Test.Name, OTP.T.Test.Run, Passed);
    if not Passed then
       Ada.Command_Line.Set_Exit_Status (1);
    end if;

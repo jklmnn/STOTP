@@ -1,4 +1,4 @@
-package TOTP_Test
+package OTP.T.Test
 with SPARK_Mode
 is
 
@@ -8,4 +8,4 @@ is
      with
        Post => Run'Result'Length <= 128;
 
-end TOTP_Test;
+end OTP.T.Test;

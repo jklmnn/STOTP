@@ -24,6 +24,8 @@ is
        Depends => (HOTP'Result => (Key, Counter)),
        Pre => Key'Length <= 64;
 
+private
+
    --  @private Only used to generate the token
    function Extract
      (Mac : HMAC.HMAC_Type)
