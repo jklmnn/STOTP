@@ -15,7 +15,6 @@ is
        Import,
        Convention => C,
        External_Name => "time";
-   package TOTP is new OTP.T;
 begin
    pragma Assert (LSC.Byte_Arrays.Natural_Index'Last / 5 > 32);
    pragma Warnings (Off, "no Global contract");
@@ -26,7 +25,7 @@ begin
      (for all C of Ada.Command_Line.Argument (1) =>
           Base32.Valid_Base32_Character (C)))
    then
-      Ada.Text_IO.Put_Line (OTP.Image (TOTP.TOTP (
+      Ada.Text_IO.Put_Line (OTP.Image (OTP.T.TOTP (
                             Base32.Decode (Ada.Command_Line.Argument (1)),
                             Time (System.Null_Address)), 6));
    else

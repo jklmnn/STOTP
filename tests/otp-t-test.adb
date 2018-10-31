@@ -3,7 +3,7 @@ with OTP.T;
 with LSC.Types;
 with LSC.Byte_Arrays;
 
-package body TOTP_Test
+package body OTP.T.Test
 with SPARK_Mode
 is
 
@@ -20,12 +20,11 @@ is
          16#37#, 16#38#, 16#39#, 16#30#);
       Time : constant LSC.Types.Word64 := 59;
       Totp_Value : constant  OTP.OTP_Value := "94287082";
-      package TOTP is new OTP.T;
    begin
-      if OTP.Image (TOTP.TOTP (Key, Time), 8) /= Totp_Value then
+      if OTP.Image (OTP.T.TOTP (Key, Time), 8) /= Totp_Value then
          return "Calculating TOTP value failed";
       end if;
       return "PASSED";
    end Run;
 
-end TOTP_Test;
+end OTP.T.Test;
