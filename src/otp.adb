@@ -15,9 +15,7 @@ is
       Value : OTP_Value (1 .. D) := (others => '0');
    begin
       for I in reverse Value'Range loop
-         pragma Loop_Invariant (for all C of Value =>
-                                  Character'Pos (C) > 47 and
-                                  Character'Pos (C) < 58);
+         pragma Loop_Invariant (for all C of Value => C in '0' .. '9');
          Value (I) := Character'Val ((Token mod 10) + 48);
          Token := Token / 10;
       end loop;

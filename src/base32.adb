@@ -123,12 +123,12 @@ is
    is
       N : Byte;
    begin
-      case Character'Pos (C) is
-         when 97 .. 122 =>
+      case C is
+         when 'a' .. 'z' =>
             N := Byte (Character'Pos (C) - 97);
-         when 65 .. 90 =>
+         when 'A' .. 'Z' =>
             N := Byte (Character'Pos (C) - 65);
-         when 50 .. 55 =>
+         when '2' .. '7' =>
             N := Byte (Character'Pos (C) - 24);
          when others =>
             raise Constraint_Error;
